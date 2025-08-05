@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Preview - ClearCents</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        .preview-container {
+            display: flex;
+            height: 100vh;
+        }
+        .code-panel {
+            flex: 1;
+            background: #1e1e1e;
+            color: #fff;
+            padding: 20px;
+            overflow: auto;
+        }
+        .preview-panel {
+            flex: 1;
+            border: none;
+            background: #fff;
+        }
+        .header {
+            background: #2d2d2d;
+            padding: 10px 20px;
+            border-bottom: 1px solid #444;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 18px;
+            color: #fff;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .controls {
+            padding: 10px 20px;
+            background: #2d2d2d;
+            border-bottom: 1px solid #444;
+        }
+        .controls button {
+            background: #007acc;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            margin-right: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .controls button:hover {
+            background: #005a9e;
+        }
+        .status {
+            color: #00ff00;
+            font-size: 12px;
+        }
+        .port-selector {
+            margin: 10px 0;
+        }
+        .port-selector select {
+            background: #333;
+            color: white;
+            border: 1px solid #555;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+        .file-list {
+            background: #2a2a2a;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        .file-list h4 {
+            margin: 0 0 10px 0;
+            color: #fff;
+        }
+        .file-list ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        .file-list li {
+            margin: 5px 0;
+            color: #ccc;
+        }
+        .file-list code {
+            background: #444;
+            padding: 2px 4px;
+            border-radius: 3px;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="preview-container">
+        <div class="code-panel">
+            <div class="header">
+                <h1>📝 Live Preview Setup</h1>
+            </div>
+            <div class="controls">
+                <button onclick="refreshPreview()">🔄 Refresh Preview</button>
+                <button onclick="openInNewTab()">🔗 Open in New Tab</button>
+                <div class="port-selector">
+                    <label for="port-select">Server Port: </label>
+                    <select id="port-select" onchange="changePort()">
+                        <option value="8080">8080</option>
+                        <option value="8081">8081</option>
+                        <option value="8082">8082</option>
+                        <option value="8083">8083</option>
+                        <option value="8084">8084</option>
+                        <option value="5173">5173 (Default)</option>
+                    </select>
+                </div>
+                <span class="status" id="status">✅ Development server running</span>
+            </div>
+            <div style="padding: 20px;">
+                <h3>🎯 How to Use Live Preview</h3>
+                <p>Your development server is running! The preview will automatically update as you edit your code.</p>
+                
+                <div class="file-list">
+                    <h4>📁 Key Files to Edit:</h4>
+                    <ul>
+                        <li><code>src/App.tsx</code> - Main application routes</li>
+                        <li><code>src/pages/Settings.tsx</code> - Settings page</li>
+                        <li><code>src/pages/Profile.tsx</code> - Profile page</li>
+                        <li><code>src/pages/Login.tsx</code> - Login page</li>
+                        <li><code>src/pages/SignUp.tsx</code> - Sign up page</li>
+                        <li><code>src/components/</code> - Reusable components</li>
+                        <li><code>src/components/ui/</code> - UI components</li>
+                    </ul>
+                </div>
+
+                <h3>🚀 Quick Start</h3>
+                <ol>
+                    <li>Open your code editor (VS Code, Cursor, etc.)</li>
+                    <li>Edit any file in the <code>src/</code> directory</li>
+                    <li>Save the file - the preview will update automatically!</li>
+                    <li>Use the port selector if the preview doesn't load</li>
+                </ol>
+
+                <h3>🔧 Development Commands</h3>
+                <ul>
+                    <li><code>npm run dev</code> - Start development server</li>
+                    <li><code>npm run build</code> - Build for production</li>
+                    <li><code>npm run preview</code> - Preview production build</li>
+                </ul>
+
+                <h3>📱 Preview Features</h3>
+                <ul>
+                    <li>✅ Hot reload on file changes</li>
+                    <li>✅ Multiple port support</li>
+                    <li>✅ Responsive design testing</li>
+                    <li>✅ Real-time updates</li>
+                </ul>
+            </div>
+        </div>
+        <div class="preview-panel">
+            <iframe id="preview-frame" src="http://localhost:8080"></iframe>
+        </div>
+    </div>
+
+    <script>
+        let currentPort = 8080;
+
+        function refreshPreview() {
+            const iframe = document.getElementById('preview-frame');
+            iframe.src = iframe.src;
+            updateStatus('🔄 Refreshed preview');
+        }
+
+        function openInNewTab() {
+            window.open(`http://localhost:${currentPort}`, '_blank');
+        }
+
+        function changePort() {
+            const portSelect = document.getElementById('port-select');
+            currentPort = portSelect.value;
+            const iframe = document.getElementById('preview-frame');
+            iframe.src = `http://localhost:${currentPort}`;
+            updateStatus(`✅ Switched to port ${currentPort}`);
+        }
+
+        function updateStatus(message) {
+            const status = document.getElementById('status');
+            status.textContent = message;
+            setTimeout(() => {
+                status.textContent = '✅ Development server running';
+            }, 3000);
+        }
+
+        // Test different ports on load
+        window.onload = function() {
+            const ports = [8080, 8081, 8082, 8083, 8084, 5173];
+            let connectedPort = null;
+            
+            ports.forEach(port => {
+                fetch(`http://localhost:${port}`)
+                    .then(response => {
+                        if (response.ok && !connectedPort) {
+                            connectedPort = port;
+                            currentPort = port;
+                            document.getElementById('port-select').value = port;
+                            document.getElementById('preview-frame').src = `http://localhost:${port}`;
+                            updateStatus(`✅ Connected to port ${port}`);
+                        }
+                    })
+                    .catch(() => {
+                        // Port not available
+                    });
+            });
+        };
+
+        // Auto-refresh every 30 seconds to catch any server restarts
+        setInterval(() => {
+            const iframe = document.getElementById('preview-frame');
+            if (iframe.contentWindow.location.href === 'about:blank') {
+                iframe.src = `http://localhost:${currentPort}`;
+            }
+        }, 30000);
+    </script>
+</body>
+</html> 
