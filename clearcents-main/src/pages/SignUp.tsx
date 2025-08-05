@@ -52,7 +52,7 @@ const SignUp = () => {
           title: "Account created successfully!",
           description: "Please check your email to verify your account.",
         });
-        navigate("/dashboard");
+        navigate("/");
       }
     } catch (error: any) {
       toast({

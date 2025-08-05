@@ -33,7 +33,7 @@ const Login = () => {
 
       if (data.user) {
         toast({ title: "Welcome back!", description: "Successfully signed in." });
-        navigate("/dashboard");
+        navigate("/");
       }
     } catch (error: any) {
       toast({
@@ -53,7 +53,7 @@ const Login = () => {
       const { error } = await supabase.auth.signInWithOAuth({
         provider,
         options: {
-          redirectTo: `${window.location.origin}/dashboard`
+          redirectTo: `${window.location.origin}/`
         }
       });
 
