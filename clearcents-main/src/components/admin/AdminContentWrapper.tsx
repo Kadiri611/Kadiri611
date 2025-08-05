@@ -24,10 +24,18 @@ export function AdminContentWrapper({
 }: AdminContentWrapperProps) {
   const { user } = useAuth();
   const { isAdmin } = useUserRole(user);
-  const { getContentBySection: getHomepageContent, updateContent: updateHomepageContent } = useHomepageContent();
-  const { getContentBySection: getFeaturesContent, updateContent: updateFeaturesContent } = useFeaturesContent();
-  const { getContentBySection: getPricingContent, updateContent: updatePricingContent } = usePricingContent();
-  const { getContentBySection: getAboutContent, updateContent: updateAboutContent } = useAboutContent();
+  
+  console.log('AdminContentWrapper Debug:', {
+    sectionId,
+    contentType,
+    user: user?.email,
+    isAdmin,
+    userId: user?.id
+  });
+  const { getContentBySection: getHomepageContent, updateContent: updateHomepageContent, refetch: refetchHomepage } = useHomepageContent();
+  const { getContentBySection: getFeaturesContent, updateContent: updateFeaturesContent, refetch: refetchFeatures } = useFeaturesContent();
+  const { getContentBySection: getPricingContent, updateContent: updatePricingContent, refetch: refetchPricing } = usePricingContent();
+  const { getContentBySection: getAboutContent, updateContent: updateAboutContent, refetch: refetchAbout } = useAboutContent();
   
   const currentContent = contentType === 'features' 
     ? getFeaturesContent(sectionId) 
@@ -45,6 +53,14 @@ export function AdminContentWrapper({
     ? updateAboutContent
     : updateHomepageContent;
 
+  const refetchFunction = contentType === 'features' 
+    ? refetchFeatures 
+    : contentType === 'pricing'
+    ? refetchPricing
+    : contentType === 'about'
+    ? refetchAbout
+    : refetchHomepage;
+
   return (
     <div className={`relative ${className}`} style={style}>
       {isAdmin && (
@@ -53,6 +69,7 @@ export function AdminContentWrapper({
           currentContent={currentContent} 
           contentType={contentType}
           updateContent={updateFunction}
+          refetch={refetchFunction}
         />
       )}
       {children}

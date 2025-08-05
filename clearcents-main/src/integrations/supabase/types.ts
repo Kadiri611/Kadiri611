@@ -287,6 +287,60 @@ export type Database = {
         }
         Relationships: []
       }
+      about_content: {
+        Row: {
+          background_color: string | null
+          button_color: string | null
+          button_text: string | null
+          button_text_color: string | null
+          created_at: string
+          description: string | null
+          description_color: string | null
+          id: string
+          image_url: string | null
+          section_id: string
+          subtitle: string | null
+          subtitle_color: string | null
+          title: string | null
+          title_color: string | null
+          updated_at: string
+        }
+        Insert: {
+          background_color?: string | null
+          button_color?: string | null
+          button_text?: string | null
+          button_text_color?: string | null
+          created_at?: string
+          description?: string | null
+          description_color?: string | null
+          id?: string
+          image_url?: string | null
+          section_id: string
+          subtitle?: string | null
+          subtitle_color?: string | null
+          title?: string | null
+          title_color?: string | null
+          updated_at?: string
+        }
+        Update: {
+          background_color?: string | null
+          button_color?: string | null
+          button_text?: string | null
+          button_text_color?: string | null
+          created_at?: string
+          description?: string | null
+          description_color?: string | null
+          id?: string
+          image_url?: string | null
+          section_id?: string
+          subtitle?: string | null
+          subtitle_color?: string | null
+          title?: string | null
+          title_color?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       pricing_content: {
         Row: {
           background_color: string | null

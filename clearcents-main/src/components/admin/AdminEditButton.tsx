@@ -16,10 +16,11 @@ interface AdminEditButtonProps {
   sectionId: string;
   currentContent?: HomepageContent | FeaturesContent | PricingContent | AboutContent;
   contentType?: 'homepage' | 'features' | 'pricing' | 'about';
-  updateContent: (sectionId: string, updates: any) => Promise<any>;
+  updateContent: (sectionId: string, updates: Record<string, unknown>) => Promise<unknown>;
+  refetch?: () => Promise<void>;
 }
 
-export function AdminEditButton({ sectionId, currentContent, contentType = 'homepage', updateContent }: AdminEditButtonProps) {
+export function AdminEditButton({ sectionId, currentContent, contentType = 'homepage', updateContent, refetch }: AdminEditButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState({
     title: '',
@@ -79,10 +80,12 @@ export function AdminEditButton({ sectionId, currentContent, contentType = 'home
       console.log('Save successful:', result);
       toast.success('Content updated successfully!');
       setIsOpen(false);
-      // Give a small delay before reload to let the toast show
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
+      // Refetch content instead of reloading the page
+      if (refetch) {
+        setTimeout(() => {
+          refetch();
+        }, 500);
+      }
     } catch (error) {
       console.error('Save failed:', error);
       console.error('Error details:', {

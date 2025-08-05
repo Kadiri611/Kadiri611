@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Heart, Target, Users, ArrowRight } from "lucide-react";
@@ -6,11 +6,18 @@ import Layout from "@/components/Layout";
 import { Link } from "react-router-dom";
 import { AdminContentWrapper } from "@/components/admin/AdminContentWrapper";
 import { useAboutContent } from "@/hooks/useAboutContent";
-import { supabase } from "@/integrations/supabase/client";
+
+interface AboutStat {
+  id: string;
+  label: string;
+  value: string;
+  is_active: boolean;
+  display_order: number;
+}
 
 const About = () => {
   const { getContentBySection } = useAboutContent();
-  const [stats, setStats] = useState([]);
+  const [stats, setStats] = useState<AboutStat[]>([]);
   
   const heroContent = getContentBySection('hero');
   const storyContent = getContentBySection('story');
@@ -19,27 +26,43 @@ const About = () => {
   const teamContent = getContentBySection('team');
   const ctaContent = getContentBySection('cta');
 
-  // Fetch stats from database
+  // Debug logging
+  console.log('About page content debug:', {
+    heroContent,
+    storyContent,
+    valuesContent,
+    statsContent,
+    teamContent,
+    ctaContent
+  });
+
+  // Use static stats since about_stats table doesn't exist in current schema
   useEffect(() => {
-    const fetchStats = async () => {
-      try {
-        const { data, error } = await supabase
-          .from('about_stats')
-          .select('*')
-          .eq('is_active', true)
-          .order('display_order');
-
-        if (error) {
-          console.error('Error fetching stats:', error);
-        } else {
-          setStats(data || []);
-        }
-      } catch (error) {
-        console.error('Error fetching stats:', error);
+    const staticStats: AboutStat[] = [
+      {
+        id: '1',
+        label: 'Happy Users',
+        value: '10K+',
+        is_active: true,
+        display_order: 1
+      },
+      {
+        id: '2',
+        label: 'Budgets Managed',
+        value: '$2M+',
+        is_active: true,
+        display_order: 2
+      },
+      {
+        id: '3',
+        label: 'Satisfaction Rate',
+        value: '98%',
+        is_active: true,
+        display_order: 3
       }
-    };
-
-    fetchStats();
+    ];
+    
+    setStats(staticStats);
   }, []);
 
   const values = [
