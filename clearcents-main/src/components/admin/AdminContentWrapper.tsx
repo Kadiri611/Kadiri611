@@ -5,13 +5,14 @@ import { AdminEditButton } from './AdminEditButton';
 import { useHomepageContent } from '@/hooks/useHomepageContent';
 import { useFeaturesContent } from '@/hooks/useFeaturesContent';
 import { usePricingContent } from '@/hooks/usePricingContent';
+import { useAboutContent } from '@/hooks/useAboutContent';
 
 interface AdminContentWrapperProps {
   sectionId: string;
   children: ReactNode;
   className?: string;
   style?: CSSProperties;
-  contentType?: 'homepage' | 'features' | 'pricing';
+  contentType?: 'homepage' | 'features' | 'pricing' | 'about';
 }
 
 export function AdminContentWrapper({ 
@@ -26,17 +27,22 @@ export function AdminContentWrapper({
   const { getContentBySection: getHomepageContent, updateContent: updateHomepageContent } = useHomepageContent();
   const { getContentBySection: getFeaturesContent, updateContent: updateFeaturesContent } = useFeaturesContent();
   const { getContentBySection: getPricingContent, updateContent: updatePricingContent } = usePricingContent();
+  const { getContentBySection: getAboutContent, updateContent: updateAboutContent } = useAboutContent();
   
   const currentContent = contentType === 'features' 
     ? getFeaturesContent(sectionId) 
     : contentType === 'pricing'
     ? getPricingContent(sectionId)
+    : contentType === 'about'
+    ? getAboutContent(sectionId)
     : getHomepageContent(sectionId);
 
   const updateFunction = contentType === 'features' 
     ? updateFeaturesContent 
     : contentType === 'pricing'
     ? updatePricingContent
+    : contentType === 'about'
+    ? updateAboutContent
     : updateHomepageContent;
 
   return (

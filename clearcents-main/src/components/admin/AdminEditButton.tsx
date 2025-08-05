@@ -8,13 +8,14 @@ import { Edit, Upload } from 'lucide-react';
 import { useHomepageContent, HomepageContent } from '@/hooks/useHomepageContent';
 import type { FeaturesContent } from '@/hooks/useFeaturesContent';
 import type { PricingContent } from '@/hooks/usePricingContent';
+import type { AboutContent } from '@/hooks/useAboutContent';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
 
 interface AdminEditButtonProps {
   sectionId: string;
-  currentContent?: HomepageContent | FeaturesContent | PricingContent;
-  contentType?: 'homepage' | 'features' | 'pricing';
+  currentContent?: HomepageContent | FeaturesContent | PricingContent | AboutContent;
+  contentType?: 'homepage' | 'features' | 'pricing' | 'about';
   updateContent: (sectionId: string, updates: any) => Promise<any>;
 }
 
@@ -50,7 +51,7 @@ export function AdminEditButton({ sectionId, currentContent, contentType = 'home
         title_color: currentContent.title_color || '#000000',
         subtitle_color: currentContent.subtitle_color || '#000000',
         description_color: currentContent.description_color || '#666666',
-        background_color: (currentContent as FeaturesContent | PricingContent).background_color || '#FFFFFF',
+        background_color: (currentContent as FeaturesContent | PricingContent | AboutContent).background_color || '#FFFFFF',
         image_url: currentContent.image_url || ''
       });
     }
@@ -258,7 +259,7 @@ export function AdminEditButton({ sectionId, currentContent, contentType = 'home
             </div>
           </div>
           
-          {(contentType === 'features' || contentType === 'pricing') && (
+          {(contentType === 'features' || contentType === 'pricing' || contentType === 'about') && (
             <div>
               <Label htmlFor="background_color">Background Color</Label>
               <Input
