@@ -13,7 +13,7 @@ import {
   DropdownMenuSubTrigger
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { User, Settings, LayoutDashboard, LogOut, ChevronDown, Shield, Globe, FileText, Package, MessageSquare } from 'lucide-react';
+import { User, Settings, LogOut, ChevronDown, Shield, Globe, FileText, Package, MessageSquare } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useUserRole } from '@/hooks/useUserRole';
 import { supabase } from '@/integrations/supabase/client';
@@ -69,12 +69,7 @@ export function UserProfileDropdown() {
           <p className="text-xs text-muted-foreground">{user.email}</p>
         </div>
         
-        <DropdownMenuItem asChild className="cursor-pointer">
-          <Link to="/dashboard" className="flex items-center">
-            <LayoutDashboard className="w-4 h-4 mr-2" />
-            Dashboard
-          </Link>
-        </DropdownMenuItem>
+
         
         <DropdownMenuItem asChild className="cursor-pointer">
           <Link to="/settings" className="flex items-center">

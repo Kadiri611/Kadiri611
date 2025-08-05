@@ -333,7 +333,7 @@ const Settings = () => {
                     Add, edit, or remove budget categories
                   </div>
                 </div>
-                <Button variant="outline" onClick={() => navigate("/budgets")}>
+                <Button variant="outline" disabled>
                   Manage
                 </Button>
               </div>

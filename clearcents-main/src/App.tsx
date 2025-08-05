@@ -1,5 +1,4 @@
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
+import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -20,9 +19,6 @@ import AdminPages from "./pages/admin/AdminPages";
 import AdminFAQ from "./pages/admin/AdminFAQ";
 import AdminPackages from "./pages/admin/AdminPackages";
 import AdminBranding from "./pages/admin/AdminBranding";
-import Dashboard from "./pages/Dashboard";
-import Insights from "./pages/Insights";
-import Budget from "./pages/Budget";
 import Profile from "./pages/Profile";
 
 const queryClient = new QueryClient();
@@ -33,7 +29,6 @@ const App = () => (
       <BrandingProvider>
         <TooltipProvider>
       <Toaster />
-      <Sonner />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -43,9 +38,6 @@ const App = () => (
           <Route path="/signup" element={<SignUp />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/insights" element={<Insights />} />
-          <Route path="/budget" element={<Budget />} />
           <Route path="/profile" element={<Profile />} />
             <Route path="/settings" element={<Settings />} />
             {/* Admin routes */}

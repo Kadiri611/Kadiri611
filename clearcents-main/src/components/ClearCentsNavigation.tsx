@@ -13,9 +13,6 @@ import {
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { 
   Menu, 
-  BarChart3, 
-  PieChart, 
-  Wallet, 
   Settings, 
   Plus,
   User,
@@ -34,9 +31,6 @@ const ClearCentsNavigation = ({ user, onLogout }: ClearCentsNavigationProps) => 
   const navigate = useNavigate();
 
   const navigationItems = [
-    { name: "Dashboard", href: "/dashboard", icon: BarChart3 },
-    { name: "Insights", href: "/insights", icon: PieChart },
-    { name: "Budgets", href: "/budgets", icon: Wallet },
     { name: "Settings", href: "/settings", icon: Settings },
   ];
 
@@ -44,7 +38,7 @@ const ClearCentsNavigation = ({ user, onLogout }: ClearCentsNavigationProps) => 
 
   const handleAddTransaction = () => {
     // This will be handled by the floating action button or quick add
-    navigate("/dashboard");
+    navigate("/settings");
   };
 
   return (
@@ -54,7 +48,7 @@ const ClearCentsNavigation = ({ user, onLogout }: ClearCentsNavigationProps) => 
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <Link to="/dashboard" className="flex items-center space-x-2">
+            <Link to="/" className="flex items-center space-x-2">
               <div className="w-8 h-8 bg-gradient-to-br from-primary to-navy rounded-lg flex items-center justify-center">
                 <span className="text-primary-foreground font-heading font-bold text-sm">C</span>
               </div>

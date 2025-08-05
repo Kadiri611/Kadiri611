@@ -1,9 +1,6 @@
 import { useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { 
-  LayoutDashboard, 
-  TrendingUp, 
-  PiggyBank, 
   Settings, 
   User 
 } from "lucide-react";
@@ -20,9 +17,6 @@ import {
 } from "@/components/ui/sidebar";
 
 const mainItems = [
-  { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
-  { title: "Budget", url: "/budget", icon: PiggyBank },
-  { title: "Insights", url: "/insights", icon: TrendingUp },
 ];
 
 const bottomItems = [
