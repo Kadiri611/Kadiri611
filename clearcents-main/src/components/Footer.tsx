@@ -30,7 +30,7 @@ const Footer = () => {
   };
 
   // Helper function to render link (internal vs external)
-  const renderLink = (link: any, className: string) => {
+  const renderLink = (link: { url: string; title: string }, className: string) => {
     const isInternal = link.url.startsWith('/');
     
     if (isInternal) {

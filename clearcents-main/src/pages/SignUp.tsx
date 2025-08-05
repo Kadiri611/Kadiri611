@@ -54,10 +54,11 @@ const SignUp = () => {
         });
         navigate("/");
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
       toast({
         title: "Sign up failed",
-        description: error.message || "An error occurred during sign up",
+        description: errorMessage || "An error occurred during sign up",
         variant: "destructive",
       });
     } finally {

@@ -57,10 +57,11 @@ const Profile = () => {
       
       setEditing(false);
       getUser();
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
       toast({
         title: "Error updating profile",
-        description: error.message,
+        description: errorMessage,
         variant: "destructive",
       });
     }

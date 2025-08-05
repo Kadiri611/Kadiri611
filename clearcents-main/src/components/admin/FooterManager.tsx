@@ -115,7 +115,7 @@ export function FooterManager() {
     }
   };
 
-  const handleDragEnd = async (result: any) => {
+  const handleDragEnd = async (result: { destination?: { index: number; droppableId: string }; source: { index: number; droppableId: string }; draggableId: string }) => {
     if (!result.destination) return;
 
     const { source, destination, draggableId } = result;

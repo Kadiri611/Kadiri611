@@ -6,7 +6,7 @@ import Layout from '@/components/Layout';
 export default function DynamicPage() {
   const { slug } = useParams<{ slug: string }>();
   const { getPageBySlug } = usePages();
-  const [page, setPage] = useState<any>(null);
+  const [page, setPage] = useState<{ title: string; content?: string } | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
